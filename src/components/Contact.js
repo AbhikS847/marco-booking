@@ -1,6 +1,6 @@
 import React from 'react';
 import {AiTwotoneStar} from "react-icons/ai";
-import { Container, Card, Button} from 'react-bootstrap';
+import { Container, Card} from 'react-bootstrap';
 import { SiGmail } from "react-icons/si";
 import {GrInstagram} from "react-icons/gr";
 
@@ -25,7 +25,7 @@ const Contact = () => {
         <div className="d-flex justify-content-center">
         <a href="https://airtasker.com" style={{fontFamily:'Roboto'}}className="btn btn-primary btn mx-1" role="button" aria-pressed="true">Air tasker</a>
         <a href="https://gmail.com" style={{fontFamily:'Roboto'}}className="btn btn-primary btn mx-1" role="button" aria-pressed="true"><SiGmail size={20} /> Gmail</a>
-        <a href="https://instagram.com" style={{fontFamily:'Roboto'}}className="btn btn-primary btn mx-1" role="button" aria-pressed="true"><GrInstagram size={20} /> Instagram</a>
+        <a href="https://www.instagram.com/dmar.co/" style={{fontFamily:'Roboto'}}className="btn btn-primary btn mx-1" role="button" aria-pressed="true"><GrInstagram size={20} /> Instagram</a>
         </div>
       </Card.Body>
       <Card.Footer className="text-muted">Copyright Marco Removals 2022</Card.Footer>

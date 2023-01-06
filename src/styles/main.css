@@ -1,11 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&family=Roboto&display=swap');
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 *{
     font-family: 'Roboto', sans-serif;
 }
 
-input:focus{
+input:focus, textarea:focus{
     outline:none !important;
     box-shadow:none !important;
     border:1px solid #1a775b !important;
