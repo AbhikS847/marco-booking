@@ -31,7 +31,7 @@ const Booking = () => {
             email:email,
             location:location,
             date:startDate,
-            time:(bookingTime.getHours() + ":" + bookingTime.getMinutes()),
+            time:((bookingTime.getHours() < 10 ? "0" + bookingTime.getHours() : bookingTime.getHours()) + ":" + (bookingTime.getMinutes() < 10 ? "0" + bookingTime.getMinutes() : bookingTime.getMinutes())),
             desc:desc
           }
           console.log(booking);
