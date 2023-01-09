@@ -25,12 +25,16 @@ const Booking = () => {
           const timeStr = JSON.parse(timeJSON);
           const bookingTime = new Date(timeStr);
 
+          const dateJSON = JSON.stringify(startDate);
+          const dateStr = JSON.parse(dateJSON);
+          const bookingDate = new Date(dateStr);
+
           const booking = {
             name:firstName + " "  + lastName,
             number:number,
             email:email,
             location:location,
-            date:startDate,
+            date:bookingDate.getDate() + "/" + (bookingDate.getMonth() + 1) + "/" + bookingDate.getFullYear(),
             time:((bookingTime.getHours() < 10 ? "0" + bookingTime.getHours() : bookingTime.getHours()) + ":" + (bookingTime.getMinutes() < 10 ? "0" + bookingTime.getMinutes() : bookingTime.getMinutes())),
             desc:desc
           }
