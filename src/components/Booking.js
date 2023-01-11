@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Container, Row, Col, Badge} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 
 const Booking = () => {
     const [firstName, setFirstName] = useState('');
@@ -39,6 +40,32 @@ const Booking = () => {
             desc:desc
           }
           console.log(booking);
+
+          const makeBooking = async() => {
+            try{
+              const response = await axios.post('http://localhost:5000/booking/create',{
+                name:booking.name,
+                number:booking.number,
+                email:booking.email,
+                location:booking.location,
+                date:booking.date,
+                time:booking.time,
+                desc:booking.desc
+              });
+            }
+            catch(error){
+              console.log(error);
+            }
+          }
+          makeBooking();
+          setFirstName("");
+          setLastName("");
+          setPhoneNumber("");
+          setEmail("");
+          setLocation("");
+          setStartDate(Date.now());
+          setTime("");
+          setDesc("");
         }}>
     <Row style={{padding:16}}>
         <h2 style={{color:"#1da179"}}>Details</h2>
