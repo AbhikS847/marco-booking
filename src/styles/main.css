@@ -78,3 +78,7 @@ a.btn.btn-primary{
 .navbar.navbar-expand-lg.navbar-light.bg-light{
     background-color: #24dba4!important;
 }
+
+td{
+    width:50%;
+}
