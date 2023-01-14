@@ -40,7 +40,7 @@ const Schedule = () => {
     <h6>No schedules available yet. Please, keep checking this page for updates or any changes to current schedules.</h6>
     </Alert> :<>
     <Card className="my-2 text-center" body>
-    Completed - <BsFillCheckSquareFill size={20} style={{color:'#14A44D'}}></BsFillCheckSquareFill> <RxDividerVertical size={20}></RxDividerVertical> Booked - <BsFillSquareFill size={20} style={{color:'#DC4C64'}}></BsFillSquareFill>
+    Completed <BsFillCheckSquareFill size={20} style={{color:'#14A44D'}}></BsFillCheckSquareFill> <RxDividerVertical size={20}></RxDividerVertical> Booked <BsFillSquareFill size={20} style={{color:'#DC4C64'}}></BsFillSquareFill>
     </Card>
     <Table size="sm" bordered>
     <thead className="text-center">

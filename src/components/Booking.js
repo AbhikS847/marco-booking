@@ -1,12 +1,106 @@
 import React, {useState} from 'react';
 import ReactDatePicker from 'react-datepicker';
+import {GiConfirmed} from "react-icons/gi";
 import "react-datepicker/dist/react-datepicker.css";
-import { Container, Row, Col, Badge} from 'react-bootstrap';
+import { Container, Row, Col, Badge, Modal, Alert} from 'react-bootstrap';
+import {FaUserAlt, FaStickyNote} from 'react-icons/fa';
+import {ImLocation, ImCalendar, ImClock, ImMail2} from 'react-icons/im';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
+const BookingModal = (props) => {
+
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+
+  return(
+    <Modal 
+    {...props}
+    size="lg"
+    aria-labelledby="contained-modal-title-vcenter"
+    centered>
+          <Modal.Header style={{backgroundColor:"#24dba4", color:"#fff"}} closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          <GiConfirmed style={{color:'#fff'}} size={24} /> Booking confirmation  
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Alert key="success" variant="success">
+        <div className="text-center">
+        <p style={{margin:4, fontSize:25}}><strong>Booking confirmed!</strong></p>
+        <p style={{margin:4}}><strong>Booking ID:</strong> {props.details._id === null ? "" : props.details._id}</p>
+        <p style={{margin:4}}><strong>Date: </strong> {props.details.date === null ? "" : (props.details.date)}</p>
+        </div>
+      </Alert>
+      <h5 className="pb-2"><strong>Booking Details</strong></h5>
+      <hr style={{marginTop:4}}></hr>
+      <div className="d-flex">
+      <div style={{padding:6, margin:4}}>
+        <FaUserAlt className="text-muted" size={20} />
+      </div>
+      <div style={{alignItems:'center'}}>
+        <div className="text-muted">Name</div>
+        <div>{props.details.name}</div>
+      </div>
+      </div>
+      <div className="d-flex pt-2">
+      <div style={{padding:6, margin:4}}>
+        <ImLocation className="text-muted" size={20} />
+      </div>
+      <div style={{alignItems:'center'}}>
+        <div className="text-muted">Location</div>
+        <div>{props.details.location}</div>
+      </div>
+      </div>
+      {props.details.date == null && props.details.time == null ? "" : (<>
+        <div className="d-flex pt-2">
+      <div style={{padding:6, margin:4}}>
+        <ImCalendar className="text-muted" size={20} />
+      </div>
+      <div style={{alignItems:'center'}}>
+        <div className="text-muted">Date</div>
+        <div>{props.details.date.slice(0,2)} {monthNames[props.details.date.slice(3,4) - 1]} {props.details.date.slice(5,10)}</div>
+      </div>
+      </div>
+      <div className="d-flex pt-2">
+      <div style={{padding:6, margin:4}}>
+        <ImClock className="text-muted" size={20} />
+      </div>
+      <div style={{alignItems:'center'}}>
+        <div className="text-muted">Time</div>
+        <div>{props.details.time} {props.details.time.slice(0,2) > 12 ? "PM" : "AM" }</div>
+      </div>
+      </div>
+      <div className="d-flex pt-2">
+      <div style={{padding:6, margin:4}}>
+        <ImMail2 className="text-muted" size={20} />
+      </div>
+      <div style={{alignItems:'center'}}>
+        <div className="text-muted">Email</div>
+        <div>{props.details.email}</div>
+      </div>
+      </div>
+      <div className="d-flex pt-2">
+      <div style={{padding:6, margin:4}}>
+        <FaStickyNote className="text-muted" size={20} />
+      </div>
+      <div style={{alignItems:'center'}}>
+        <div className="text-muted">Description</div>
+        <div>{props.details.desc === "" ? "(No description added)" : props.details.desc}</div>
+      </div>
+      </div>
+      </>)}
+      </Modal.Body>
+      <Modal.Footer>
+      <p style={{padding:4, margin:4}} className="text-muted small w-100">A copy of this confirmation will be sent to your email.</p>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
 const Booking = () => {
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [number, setPhoneNumber] = useState('');
@@ -15,6 +109,9 @@ const Booking = () => {
     const [startDate, setStartDate] = useState(Date.now());
     const [time, setTime] = useState('');
     const [desc, setDesc] = useState('');
+
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [confirmationDetails, setConfirmationDetails] = useState({});
   
     return <div>
     <Container>
@@ -39,11 +136,11 @@ const Booking = () => {
             time:((bookingTime.getHours() < 10 ? "0" + bookingTime.getHours() : bookingTime.getHours()) + ":" + (bookingTime.getMinutes() < 10 ? "0" + bookingTime.getMinutes() : bookingTime.getMinutes())),
             desc:desc
           }
-          console.log(booking);
 
           const makeBooking = async() => {
             try{
               const response = await axios.post('http://localhost:5000/booking/create',{
+                _id:Math.floor(Math.random() * 99999999),
                 name:booking.name,
                 number:booking.number,
                 email:booking.email,
@@ -52,6 +149,9 @@ const Booking = () => {
                 time:booking.time,
                 desc:booking.desc
               });
+              console.log(response.data);
+              setConfirmationDetails(response.data);
+              setShowSuccess(true);
             }
             catch(error){
               console.log(error);
@@ -67,6 +167,7 @@ const Booking = () => {
           setTime("");
           setDesc("");
         }}>
+    <BookingModal details={confirmationDetails} show={showSuccess} onHide={()=>{setShowSuccess(false)}} />
     <Row style={{padding:16}}>
         <h2 style={{color:"#1da179"}}>Details</h2>
         <Col xs={12} sm={4}>
